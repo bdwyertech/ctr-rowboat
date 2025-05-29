@@ -61,14 +61,6 @@ jobs:
       - name: Set up Docker Buildx
         if: steps.check_image.outputs.exists == 'false'
         uses: docker/setup-buildx-action@v3
-      
-      - name: List CWD Contents
-        run: ls -lah
-
-      - name: List build context contents
-        run: |
-          echo "Listing files in ./apps/rowboat:" && ls -lah ./apps/rowboat
-          echo "Listing files in ./apps/rowboat/ (including hidden):" && ls -lahA ./apps/rowboat
 
       - name: Build and push Docker image (multi-arch, tagged with SHA)
         if: steps.check_image.outputs.exists == 'false'
@@ -95,9 +87,9 @@ jobs:
           output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH'
   
-      - name: Upload Trivy scan results to GitHub Security tab
-        if: steps.check_image.outputs.exists == 'false'
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: 'trivy-results.sarif'
-          category: 'container-security'
+      # - name: Upload Trivy scan results to GitHub Security tab
+      #   if: steps.check_image.outputs.exists == 'false'
+      #   uses: github/codeql-action/upload-sarif@v3
+      #   with:
+      #     sarif_file: 'trivy-results.sarif'
+      #     category: 'container-security'
