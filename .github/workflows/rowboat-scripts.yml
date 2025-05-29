@@ -65,6 +65,11 @@ jobs:
       - name: List CWD Contents
         run: ls -lah
 
+      - name: List build context contents
+        run: |
+          echo "Listing files in ./apps/rowboat:" && ls -lah ./apps/rowboat
+          echo "Listing files in ./apps/rowboat/ (including hidden):" && ls -lahA ./apps/rowboat
+
       - name: Build and push Docker image (multi-arch, tagged with SHA)
         if: steps.check_image.outputs.exists == 'false'
         uses: docker/build-push-action@v6
