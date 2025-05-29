@@ -61,6 +61,9 @@ jobs:
       - name: Set up Docker Buildx
         if: steps.check_image.outputs.exists == 'false'
         uses: docker/setup-buildx-action@v3
+      
+      - name: List CWD Contents
+        run: ls -lah
 
       - name: Build and push Docker image (multi-arch, tagged with SHA)
         if: steps.check_image.outputs.exists == 'false'
