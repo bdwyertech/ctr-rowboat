@@ -82,7 +82,7 @@ services:
     restart: unless-stopped
 
   setup_qdrant:
-    image: ghcr.io/bdwyertech/setup-qdrant:latest
+    image: ghcr.io/bdwyertech/rowboat-scripts:latest
     command: ["sh", "-c", "npm run setupQdrant"]
     profiles: [ "setup_qdrant" ]
     depends_on:
@@ -95,7 +95,7 @@ services:
     restart: no
 
   delete_qdrant:
-    image: ghcr.io/bdwyertech/delete-qdrant:latest
+    image: ghcr.io/bdwyertech/rowboat-scripts:latest
     command: ["sh", "-c", "npm run deleteQdrant"]
     profiles: [ "delete_qdrant" ]
     depends_on:
@@ -107,7 +107,7 @@ services:
     restart: no
 
   rag_files_worker:
-    image: ghcr.io/bdwyertech/rag-files-worker:latest
+    image: ghcr.io/bdwyertech/rowboat-scripts:latest
     command: ["npm", "run", "ragFilesWorker"]
     profiles: [ "rag_files_worker" ]
     environment:
@@ -131,7 +131,7 @@ services:
       - uploads:/app/uploads
 
   rag_urls_worker:
-    image: ghcr.io/bdwyertech/rag-urls-worker:latest
+    image: ghcr.io/bdwyertech/rowboat-scripts:latest
     command: ["npm", "run", "ragUrlsWorker"]
     profiles: [ "rag_urls_worker" ]
     environment:
@@ -147,7 +147,7 @@ services:
     restart: unless-stopped
 
   rag_text_worker:
-    image: ghcr.io/bdwyertech/rag-text-worker:latest
+    image: ghcr.io/bdwyertech/rowboat-scripts:latest
     command: ["npm", "run", "ragTextWorker"]
     profiles: [ "rag_text_worker" ]
     environment:

@@ -1,4 +1,4 @@
-name: Build and Push RAG Text Worker Docker image to GHCR
+name: Build and Push Rowboat Scripts Docker image to GHCR
 
 on:
   push:
@@ -28,11 +28,11 @@ jobs:
       - name: Check if image with short SHA exists in GHCR
         id: check_image
         env:
-          GHCR_REPO: ghcr.io/${{ github.repository_owner }}/rag-text-worker
+          GHCR_REPO: ghcr.io/${{ github.repository_owner }}/rowboat-scripts
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG=${{ steps.upstream_sha.outputs.short_sha }}
-          REPO=${{ github.repository_owner }}/rag-text-worker
+          REPO=${{ github.repository_owner }}/rowboat-scripts
           EXISTS=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
             "https://ghcr.io/v2/$REPO/manifests/$TAG" | grep -c 'errors')
           if [ "$EXISTS" = "0" ]; then
@@ -70,8 +70,8 @@ jobs:
           file: scripts.Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/rag-text-worker:latest
-            ghcr.io/${{ github.repository_owner }}/rag-text-worker:${{ steps.upstream_sha.outputs.short_sha }}
+            ghcr.io/${{ github.repository_owner }}/rowboat-scripts:latest
+            ghcr.io/${{ github.repository_owner }}/rowboat-scripts:${{ steps.upstream_sha.outputs.short_sha }}
           build-args: |
             UPSTREAM_SHA=${{ steps.upstream_sha.outputs.sha }}
           platforms: linux/amd64,linux/arm64
@@ -82,7 +82,7 @@ jobs:
         if: steps.check_image.outputs.exists == 'false'
         uses: aquasecurity/trivy-action@0.28.0
         with:
-          image-ref: ghcr.io/${{ github.repository_owner }}/rag-text-worker:${{ steps.upstream_sha.outputs.short_sha }}
+          image-ref: ghcr.io/${{ github.repository_owner }}/rowboat-scripts:${{ steps.upstream_sha.outputs.short_sha }}
           format: 'sarif'
           output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH'
